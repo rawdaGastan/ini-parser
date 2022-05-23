@@ -11,6 +11,7 @@ from parse import ini_parse
 file_name = "sample.ini"
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 file = open(os.path.join(__location__, file_name))
+
 parsed = ini_parse(file)
 
 # test functions
@@ -20,4 +21,5 @@ def test_value():
     assert parsed["database"]["server"] == "192.0.2.62", "Should be 192.0.2.62"
     assert parsed["database"]["port"] == 143, "Should be 143"
     assert parsed["database"]["password"] == 123456, "Should be 123456"
+
 

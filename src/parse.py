@@ -25,4 +25,10 @@ def ini_parse(file):
 
             parsed[parent][key] = val
 
+        elif line == "\n":
+            pass
+
+        else:
+            raise Exception("Not a valid ini file")
+
     return parsed
