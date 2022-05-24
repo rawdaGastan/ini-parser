@@ -1,10 +1,13 @@
 
-def ini_parse(file):
+from parsed import Parsed
+
+
+def ini_parse(file_content):
     # read file lines
-    file_lines = file.readlines()
+    file_lines = file_content.readlines()
 
     # parsed dict
-    parsed = {}
+    parsed = Parsed()
 
     # for parents
     new_parent = False
@@ -12,7 +15,8 @@ def ini_parse(file):
     for line in file_lines:
         if line[0] == "[" and line[len(line) - 2] == "]":
             parent = line[1: len(line) - 2]
-            parsed[parent] = {}
+            parsed.add_parent(parent)
+            #parsed[parent] = {}
             new_parent = True
         
         elif new_parent and line.count("=") == 1:
@@ -27,11 +31,13 @@ def ini_parse(file):
             if val.isdigit():
                 val = int(val) 
 
-            parsed[parent][key] = val
+            parsed.add(parent, key, val)
+            #parsed[parent][key] = val
 
         elif line[0] == ";" or line.strip() == '':
             pass
 
         else:
             raise Exception("Not a valid ini file")
-    return parsed
+
+    return parsed.parsed_dict
