@@ -50,7 +50,7 @@ def test_parsed_sections():
     test_parsed.get_sections()
     test_parsed_sections = test_parsed.sections
 
-    assert test_parsed_sections == ['owner', 'database']
+    assert list(test_parsed_sections) == ['owner', 'database']
 
 def test_parsed_functions():
     file_content = open(os.path.join(__location__, file_name))
