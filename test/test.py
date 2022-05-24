@@ -39,20 +39,20 @@ def test_value():
     assert parsed["database"]["port"] == 143, "Should be 143"
     assert parsed["database"]["password"] == 123456, "Should be 123456"
 
-def test_parsed_functions():
+def test_parsed_sections():
     file_content = open(os.path.join(__location__, file_name))
     parsed = ini_parse(file_content)
 
     test_parsed = Parsed()
     test_parsed.set_parsed_dict(parsed)
-    #parsed str
-    test_parsed_str = test_parsed.to_string()
-    # parsed dict
-    test_parsed_dict = test_parsed.from_string(test_parsed_str)
 
-    assert test_parsed_dict == parsed
+    # get sections
+    test_parsed.get_sections()
+    test_parsed_sections = test_parsed.sections
 
-def test_parsed_sections():
+    assert test_parsed_sections == ['owner', 'database']
+
+def test_parsed_functions():
     file_content = open(os.path.join(__location__, file_name))
     parsed = ini_parse(file_content)
 
@@ -65,8 +65,6 @@ def test_parsed_sections():
     # parsed dict
     test_parsed.from_string(test_parsed_str)
     test_parsed_dict = test_parsed.parsed_dict
-
-    print(test_parsed)
 
     assert test_parsed_dict == parsed
 
