@@ -20,6 +20,10 @@ class Parser:
   
 
   def to_string(self):
+    #clean str
+    self.parsed_str = ""
+
+    # parse to str
     for parent, dict in self.parsed_dict.items():
       self.parsed_str += "[" + str(parent) + "]\n"
       for key, val in dict.items():
@@ -29,6 +33,8 @@ class Parser:
 
 
   def from_string(self, content):
+    self.parsed_dict = {}
+
     # read file lines
     if(type(content) == str):
       file_lines = content.splitlines()
@@ -46,7 +52,7 @@ class Parser:
             self.add_parent(parent)
             new_parent = True
         
-        elif len(line) > 0 and new_parent and line.count("=") == 1 and "=" != line[0] and line[0] != "":
+        elif len(line) > 0 and new_parent and line.count("=") == 1 and line[0] not in ["", "="] and line[len(line)-1] != "=":
             if " = " in line:
                 key, val = line.split(" = ")
             elif "=" in line:
@@ -70,3 +76,4 @@ class Parser:
 
   def get_sections(self):
     self.sections = self.parsed_dict.keys()
+    return list(self.sections)
