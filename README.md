@@ -5,5 +5,5 @@
 pip install -U pytest
 ```
 ```
-pytest -q test/test.py
+pytest -v test/test.py
 ```

@@ -1,16 +1,7 @@
-#####################
-# append src folder #
-#####################
-
-import sys
-import os
-
-import pytest
-
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), "src"))
-from ini_parser import Parser
+from src.ini_parser import Parser
 
 # get the file location and name
+import os
 file_name = "sample.ini"
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
@@ -18,6 +9,7 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 ##################
 # test functions #
 ################## 
+import pytest
 
 def test_valid():
     try:
@@ -85,6 +77,12 @@ def test_unclosed_section():
 
     with pytest.raises(Exception) as e:
         parser.from_string("[owner\nkey=val\n")
+
+def test_unopenedsection():
+    parser = Parser()
+
+    with pytest.raises(Exception) as e:
+        parser.from_string("owner]\nkey=val\n")
     
 
 def test_no_equal():
