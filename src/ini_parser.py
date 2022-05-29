@@ -86,18 +86,3 @@ class Parser:
 
     return list(self.sections)
 
-
-file_content = """
-[owner]
-name=John
-organization = threefold
-
-[database]
-server = 192.0.2.62
-port = 143
-password = 123456
-"""
-parser = Parser()
-dict = parser.from_string(file_content)
-print(dict)
-print(parser.to_string())
