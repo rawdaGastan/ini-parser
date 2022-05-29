@@ -1,35 +1,30 @@
 from src.ini_parser import Parser
-import pytest
 
-##################
-# sample_content #
-################## 
-file_content = """
-[owner]
-name=John
-organization = threefold
+# get the file location and name
+import os
+file_name = "sample.ini"
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
-[database]
-server = 192.0.2.62
-port = 143
-password = 123456
-"""
 
 ##################
 # test functions #
 ################## 
+import pytest
+
 def test_valid():
     try:
-        parser = Parser()
-        parser.from_string(file_content)
+        with open(os.path.join(__location__, file_name)) as file_content:
+            parser = Parser()
+            parser.from_string(file_content)
         assert True
     except Exception as exc:
         assert False
 
 
 def test_value():
-    parser = Parser()
-    parsed = parser.from_string(file_content)
+    with open(os.path.join(__location__, file_name)) as file_content:
+        parser = Parser()
+        parsed = parser.from_string(file_content)
 
     assert parsed["owner"]["name"] == "John", "Should be John"
     assert parsed["owner"]["organization"] == "threefold", "Should be threefold"
@@ -38,16 +33,18 @@ def test_value():
     assert parsed["database"]["password"] == 123456, "Should be 123456"
 
 def test_parsed_sections():
-    parser = Parser()
-    parser.from_string(file_content)
+    with open(os.path.join(__location__, file_name)) as file_content:
+        parser = Parser()
+        parsed = parser.from_string(file_content)
 
     # get sections
     assert ["owner", "database"] == parser.get_sections()
 
 
 def test_parsed_functions():
-    parser = Parser()
-    parsed = parser.from_string(file_content)
+    with open(os.path.join(__location__, file_name)) as file_content:
+        parser = Parser()
+        parsed = parser.from_string(file_content)
 
     #parsed str
     test_parsed_str = parser.to_string()
