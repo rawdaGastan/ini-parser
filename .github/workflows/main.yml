@@ -15,8 +15,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      - run: pip install -U pytest
-      - run: pytest -q test/test.py
+      - run: poetry run pytest ini/parser.py
 
     
 
