@@ -1,4 +1,4 @@
-from ini.parser import Parser
+from ini_parser.ini.parser import Parser
 import pytest
 
 ##################
