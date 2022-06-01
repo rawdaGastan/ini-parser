@@ -4,10 +4,10 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
+      - run: ls
       - run: |
           pip install testresources
           pip install poetry
-          cd ini-parser
           poetry install
           poetry run pytest -v test/test.py
 
