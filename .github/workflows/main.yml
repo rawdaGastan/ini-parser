@@ -7,8 +7,9 @@ jobs:
       - run: |
           pip install testresources
           pip install poetry
+          poetry init
           poetry install
-          poetry run pytest ini/parser.py
+          poetry run pytest -v test/test.py
 
     
 
