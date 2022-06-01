@@ -17,6 +17,8 @@ organization = threefold
 server = 192.0.2.62
 port = 143
 password = 123456
+protected = true
+version = 12.6
 """,
 
 "valid_comment": ";comment",
@@ -66,13 +68,20 @@ def test_valid_empty():
 def test_value():
     parser = Parser()
     parser.from_string(sample_content["valid"])
-    parsed = parser.to_dict()
 
-    assert parsed["owner"]["name"] == "John", "Should be John"
-    assert parsed["owner"]["organization"] == "threefold", "Should be threefold"
-    assert parsed["database"]["server"] == "192.0.2.62", "Should be 192.0.2.62"
-    assert parsed["database"]["port"] == 143, "Should be 143"
-    assert parsed["database"]["password"] == 123456, "Should be 123456"
+    assert parser.get_option("owner", "name") == "John"
+    assert parser.get_option("owner", "organization") == "threefold"
+    assert parser.get_option("database", "server") == "192.0.2.62"
+    assert parser.get_option("database", "port") == "143"
+    assert parser.get_option("database", "password") == "123456"
+    assert parser.get_option("database", "protected") == "true"
+    assert parser.get_option("database", "version") == "12.6"
+
+    assert parser.get_bool("database", "protected") == True
+    assert parser.get_int("database", "port") == 143
+    assert parser.get_float("database", "port") == 143
+    assert parser.get_int("database", "password") == 123456
+    assert parser.get_float("database", "version") == 12.6
 
 def test_parsed_sections():
     parser = Parser()
@@ -176,9 +185,9 @@ def test_more_then_one_equal():
     with pytest.raises(Exception) as e:
         parser.from_string(sample_content["invalid_more_then_one_equal"])
 
-#######################
-# functions exception #
-#######################
+########################
+# functions exceptions #
+########################
 
 def test_no_sections():
     parser = Parser()
@@ -217,3 +226,34 @@ def test_set_option_old_option():
     with pytest.raises(Exception) as e:
         assert "John" == parser.get_option("owner", "name")
 
+#####################
+# test wrong values #
+#####################
+
+def test_wrong_value():
+    parser = Parser()
+    parser.from_string(sample_content["valid"])
+
+    with pytest.raises(Exception) as e:
+        assert parser.get_option("owner", "server") == "John"
+
+def test_wrong_bool():
+    parser = Parser()
+    parser.from_string(sample_content["valid"])
+
+    with pytest.raises(Exception) as e:
+        parser.get_bool("database", "server")
+
+def test_wrong_int():
+    parser = Parser()
+    parser.from_string(sample_content["valid"])
+
+    with pytest.raises(Exception) as e:
+        parser.get_int("database", "protected")
+
+def test_wrong_float():
+    parser = Parser()
+    parser.from_string(sample_content["valid"])
+
+    with pytest.raises(Exception) as e:
+        parser.get_float("database", "protected")

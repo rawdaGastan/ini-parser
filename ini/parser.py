@@ -1,4 +1,7 @@
 
+from unicodedata import decimal
+
+
 class Parser:
 
   def __init__(self):
@@ -88,10 +91,6 @@ class Parser:
                     key, val = line.split(" = ")
                 elif "=" in line:
                     key, val = line.split("=")
-
-                # check if digit
-                if val.isdigit():
-                    val = int(val) 
 
                 self.__add(parent, key, val)
 
@@ -183,3 +182,51 @@ class Parser:
     else:
       self.__parsed_dict[section_key][option_key] = option_value
 
+####################
+## values getters ##
+####################
+
+  def get_bool(self, section_key, option_key):
+      """
+      returns the bool value of the option key which belongs to the section key given
+      bool could be : true, false, True, False, yes, no, 1, 0 
+      """
+      option = self.get_option(section_key, option_key)
+
+      if option in ["true", "True", "yes", "1"]:
+        bool_option = True
+        
+      elif option in ["false", "False", "no", "0"]:
+        bool_option = False
+
+      else:
+        raise Exception("Not a valid boolean")
+
+      return bool_option
+
+
+  def get_int(self, section_key, option_key):
+      """
+      returns the int value of the option key which belongs to the section key given
+      """
+      option = self.get_option(section_key, option_key)
+
+      if option.isdigit():
+        int_option = int(option)
+        
+      else:
+        raise Exception("Not a valid integer")
+
+      return int_option
+
+  def get_float(self, section_key, option_key):
+      """
+      returns the float value of the option key which belongs to the section key given
+      """
+      option = self.get_option(section_key, option_key)
+
+      try:
+        return float(option)
+
+      except ValueError:
+          raise Exception("Not a valid float")
