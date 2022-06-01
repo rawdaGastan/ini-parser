@@ -32,7 +32,7 @@ version = 12.6
 "invalid_no_equal": "[owner]\nkeyval",
 "invalid_no_value": "[owner]\nkeyval=",
 "invalid_no_key": "[owner]\n=keyval",
-"invalid_more_then_one_equal": "[owner]\nkey==val",
+"invalid_more_than_one_equal": "[owner]\nkey==val",
 
 "invalid_no_sections": "",
 "invalid_no_options": "[owner]",
@@ -179,11 +179,11 @@ def test_no_key():
     with pytest.raises(Exception) as e:
         parser.from_string(sample_content["invalid_no_key"])
 
-def test_more_then_one_equal():
+def test_more_than_one_equal():
     parser = Parser()
 
     with pytest.raises(Exception) as e:
-        parser.from_string(sample_content["invalid_more_then_one_equal"])
+        parser.from_string(sample_content["invalid_more_than_one_equal"])
 
 ########################
 # functions exceptions #

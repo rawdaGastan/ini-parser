@@ -1,11 +1,7 @@
-
-from unicodedata import decimal
-
-
 class Parser:
 
   def __init__(self):
-    self.__parsed_dict = {}
+      self.__parsed_dict = {}
 
   @property
   def parsed_dict(self):
@@ -39,7 +35,6 @@ class Parser:
   ###################
 
   def __str__(self):
-    #clean str
     parsed_str = ""
 
     # parse to str
@@ -59,6 +54,10 @@ class Parser:
 
 
   def from_string(self, content):
+    """
+    parse the ini content as :
+    {section1: {key1: value1, key2: value2, ...}, section2: {key1: value1, key2: value2, ...}, ...}
+    """
     self.__parsed_dict = {}
 
     # read content lines
@@ -111,6 +110,10 @@ class Parser:
             raise Exception("Not a valid ini content")
 
   def to_dict(self):
+    """
+    Get the parsed dictionary as :
+    {section1: {key1: value1, key2: value2, ...}, section2: {key1: value1, key2: value2, ...}, ...}
+    """
     return self.__parsed_dict
 
 

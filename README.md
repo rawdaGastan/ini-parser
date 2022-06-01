@@ -1,4 +1,4 @@
-# ini-parser
+# ini_parser
 
 ### Testing
 ```
