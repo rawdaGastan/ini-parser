@@ -16,7 +16,6 @@ jobs:
       
       - name: Test
         run: |
-          poetry run pytest ini/parser.py
-
+            poetry run pytest ini/parser.py
     
 

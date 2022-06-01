@@ -12,5 +12,6 @@ pytest -v test/test.py
 ```
 pip install testresources
 pip install poetry
+poetry install
 poetry run pytest -v test/test.py
 ```
