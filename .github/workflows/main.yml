@@ -9,10 +9,11 @@ jobs:
 
       - name: Install poetry
         uses: actions/setup-python@v1
-        run: |
-            pip install -U pip
-            pip install poetry
-            poetry install
+        
+      - run: |
+          pip install -U pip
+          pip install poetry
+          poetry install
       
       - name: Test
         run: |
